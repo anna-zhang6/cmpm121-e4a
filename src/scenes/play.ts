@@ -9,6 +9,7 @@ import {
   HEIGHT,
   Player,
   PowerUp,
+  type PowerUpKind,
   WIDTH,
 } from "../actors.ts";
 import {
@@ -331,8 +332,8 @@ export class GameScene extends Phaser.Scene implements Arena {
     );
   }
 
-  summon(_kind: string, x: number, y: number): void {
-    this.enemies.push(this.spawn("drone", x, y, x < WIDTH / 2 ? 1 : -1));
+  summon(kind: EnemyKind, x: number, y: number): void {
+    this.enemies.push(this.spawn(kind, x, y, x < WIDTH / 2 ? 1 : -1));
   }
 
   private spawn(
@@ -479,7 +480,7 @@ export class GameScene extends Phaser.Scene implements Arena {
     }
     this.explode(enemy.x, enemy.y, 1);
     if (this.rng.chance(enemy.dropChance)) {
-      const kind = this.player.power < 3 && this.rng.chance(0.5)
+      const kind: PowerUpKind = this.player.power < 3 && this.rng.chance(0.5)
         ? "spread"
         : "shield";
       this.pickups.push(new PowerUp(this, enemy.x, enemy.y, kind));
@@ -488,7 +489,7 @@ export class GameScene extends Phaser.Scene implements Arena {
 
   private hurtPlayer(): void {
     // After the Warden falls, nothing can hurt the ship during the victory lap.
-    if (this.run.bossDefeted || this.gameOver || !this.player.vulnerable) {
+    if (this.run.bossDefeated || this.gameOver || !this.player.vulnerable) {
       return;
     }
     this.run.hits++;

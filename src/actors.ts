@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import type { Rng } from "./rng.ts";
-import { ENEMY_STATS, type EnemyKind } from "./route.ts";
+import { ENEMY_STATS, type EnemyKind, type EnemyStats } from "./route.ts";
 
 export const WIDTH = 480;
 export const HEIGHT = 640;
@@ -18,7 +18,7 @@ export interface Arena {
     speed: number,
     heavy?: boolean,
   ): void;
-  summon(kind: string, x: number, y: number): void;
+  summon(kind: EnemyKind, x: number, y: number): void;
 }
 
 /** A circle-collided image advanced once per fixed tick by its scene. */
@@ -82,14 +82,8 @@ function aim(from: { x: number; y: number }, arena: Arena): number {
 }
 
 /** What one kind of enemy is: its numbers and how it moves and shoots. */
-export interface EnemyType {
-  hp: number;
-  score: number;
-  radius: number;
-  dropChance: number;
-  /** Moves the enemy for one tick; omitted for kinds that move themselves. */
+export interface EnemyType extends EnemyStats {
   move?(enemy: Enemy, arena: Arena): void;
-  /** Fires for one tick; omitted for kinds that never shoot. */
   fire?(enemy: Enemy, arena: Arena): void;
 }
 
@@ -374,7 +368,7 @@ export class Player extends Actor {
     return true;
   }
 
-  collect(kind: string): void {
+  collect(kind: PowerUpKind): void {
     if (kind === "spread") this.power = Math.min(MAX_POWER, this.power + 1);
     if (kind === "shield") this.shielded = true;
   }
