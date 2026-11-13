@@ -330,21 +330,7 @@ export class GameScene extends Phaser.Scene implements Arena {
     y: number,
     side: number,
   ): ShmupPrefabSprite {
-    const stats = ENEMY_STATS[kind];
-    return new ShmupPrefabSprite(
-      this,
-      x,
-      y,
-      kind,
-      stats.hp,
-      stats.score,
-      stats.radius,
-      stats.dropChance,
-      stats.canShoot,
-      false,
-      x,
-      side,
-    );
+    return new ShmupPrefabSprite(this, kind, ENEMY_STATS[kind], x, y, side);
   }
 
   // one tick of gameplay
