@@ -10,26 +10,35 @@ import {
   Player,
   PowerUp,
   WIDTH,
-} from "./actors.ts";
+} from "../actors.ts";
 import {
   type EnemyKind,
   ROUTE_NAMES,
   SECTOR_GRACE_TICKS,
   SECTORS,
   spawnsAt,
-} from "./route.ts";
-import type { Hud } from "./hud.ts";
-import type { LaunchOptions } from "./main.ts";
-import { AutoPilot, KeyboardPilot, type Pilot } from "./pilots.ts";
-import { Rng } from "./rng.ts";
-import { loadSounds, play } from "./sounds.ts";
-import { makeTextures, TINTS } from "./textures.ts";
+} from "../route.ts";
+import type { Hud } from "../hud.ts";
+import type { LaunchOptions } from "../main.ts";
+import { AutoPilot, KeyboardPilot, type Pilot } from "../pilots.ts";
+import { Rng } from "../rng.ts";
+import { loadSounds, play } from "../sounds.ts";
+import { makeTextures, TINTS } from "../textures.ts";
 import { Backdrop } from "./backdrop.ts";
 
 const TICK_MS = 1000 / 60;
 const START_LIVES = 3;
 const BOSS_WARNING_TICKS = 200;
 const VICTORY_TICKS = 180;
+/** Totals for one run; the cutscene reads them. */
+export interface RunTotals {
+  score: number;
+  lives: number;
+  kills: number;
+  hits: number;
+  continues: number;
+  bossDefeated: boolean;
+}
 /** Seconds of idling before the title hands the ship to the autopilot. */
 const IDLE_SECONDS = 8;
 

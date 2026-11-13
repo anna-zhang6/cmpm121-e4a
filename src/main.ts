@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { HEIGHT, WIDTH } from "./actors.ts";
 import { Hud } from "./hud.ts";
-import { GameScene } from "./game.ts";
+import { GameScene } from "./scenes/play.ts";
 import "./style.css";
 
 /**
